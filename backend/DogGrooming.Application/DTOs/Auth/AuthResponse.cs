@@ -1,0 +1,9 @@
+namespace DogGrooming.Application.DTOs.Auth;
+
+/// <summary>Returned on successful register/login.</summary>
+public class AuthResponse
+{
+    public string Token { get; set; } = string.Empty;
+    public DateTime ExpiresAt { get; set; }
+    public UserDto User { get; set; } = new();
+}
