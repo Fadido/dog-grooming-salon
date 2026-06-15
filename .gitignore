@@ -1,0 +1,40 @@
+# ---- .NET ----
+bin/
+obj/
+*.user
+*.suo
+.vs/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+
+# EF / local db
+*.mdf
+*.ldf
+
+# Secrets (never commit real secrets)
+appsettings.*.local.json
+secrets.json
+
+# ---- Node / Next.js (frontend, later phase) ----
+node_modules/
+.next/
+out/
+dist/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ---- Env ----
+.env
+.env.local
+.env.*.local
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

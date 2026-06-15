@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DogGrooming.Api/DogGrooming.Api.csproj" />
+  <Project Path="DogGrooming.Application/DogGrooming.Application.csproj" />
+  <Project Path="DogGrooming.Domain/DogGrooming.Domain.csproj" />
+  <Project Path="DogGrooming.Infrastructure/DogGrooming.Infrastructure.csproj" />
+</Solution>
