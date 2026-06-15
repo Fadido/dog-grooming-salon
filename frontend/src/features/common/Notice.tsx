@@ -27,7 +27,7 @@ export function Notice({
     <div
       style={{
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         gap: 8,
         background: t.bg,
         color: t.fg,
@@ -35,11 +35,15 @@ export function Notice({
         padding: "10px 13px",
         fontSize: 14,
         fontWeight: 600,
+        lineHeight: 1.5,
         ...style,
       }}
     >
-      <Icon name={icon} size={17} />
-      <span>{children}</span>
+      <span style={{ display: "inline-flex", flex: "0 0 auto", marginTop: 1 }}>
+        <Icon name={icon} size={17} />
+      </span>
+      {/* `pre-line` turns the "\n"-joined validation messages into separate lines. */}
+      <span style={{ whiteSpace: "pre-line" }}>{children}</span>
     </div>
   );
 }

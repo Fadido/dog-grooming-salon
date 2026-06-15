@@ -75,7 +75,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
     const message =
       fieldErrors.length > 0
-        ? fieldErrors.join(" · ")
+        ? fieldErrors.join("\n")
         : problem?.detail ||
           problem?.title ||
           (res.status === 401 ? "נדרשת התחברות מחדש." : "אירעה שגיאה. נסו שוב.");

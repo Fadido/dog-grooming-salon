@@ -13,6 +13,6 @@ public class RegisterRequest
     public string Password { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "יש להזין שם פרטי")]
-    [StringLength(50, MinimumLength = 1, ErrorMessage = "שם פרטי ארוך מדי")]
+    [StringLength(50, ErrorMessage = "שם פרטי ארוך מדי (עד 50 תווים)")]
     public string FirstName { get; set; } = string.Empty;
 }
