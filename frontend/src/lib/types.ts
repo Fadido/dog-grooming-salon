@@ -63,9 +63,3 @@ export interface AppointmentInput {
   haircutTypeId: number;
   scheduledTime: string;
 }
-
-export interface AppointmentFilter {
-  fromDate?: string;
-  toDate?: string;
-  customerName?: string;
-}

@@ -18,9 +18,9 @@ public class AppointmentService : IAppointmentService
         _haircutTypes = haircutTypes;
     }
 
-    public async Task<IReadOnlyList<AppointmentQueueDto>> GetQueueAsync(AppointmentFilter filter, int currentUserId)
+    public async Task<IReadOnlyList<AppointmentQueueDto>> GetQueueAsync(int currentUserId)
     {
-        var items = await _appointments.QueryQueueAsync(filter);
+        var items = await _appointments.QueryQueueAsync();
         var today = DateTime.UtcNow.Date;
 
         return items.Select(i =>

@@ -1,4 +1,3 @@
-using DogGrooming.Application.DTOs.Appointments;
 using DogGrooming.Application.Interfaces.Repositories;
 using DogGrooming.Domain.Entities;
 using DogGrooming.Infrastructure.Data;
@@ -53,24 +52,11 @@ public class AppointmentRepository : IAppointmentRepository
         await _db.SaveChangesAsync();
     }
 
-    public async Task<IReadOnlyList<AppointmentQueueItem>> QueryQueueAsync(AppointmentFilter filter)
+    public async Task<IReadOnlyList<AppointmentQueueItem>> QueryQueueAsync()
     {
         // All queue reads go through the vw_AppointmentQueue SQL view.
-        var query = _db.AppointmentQueue.AsNoTracking().AsQueryable();
-
-        if (filter.FromDate is { } from)
-            query = query.Where(x => x.ScheduledTime >= from);
-
-        if (filter.ToDate is { } to)
-            query = query.Where(x => x.ScheduledTime <= to);
-
-        if (!string.IsNullOrWhiteSpace(filter.CustomerName))
-        {
-            var name = filter.CustomerName.Trim();
-            query = query.Where(x => x.CustomerFirstName.Contains(name));
-        }
-
-        return await query
+        return await _db.AppointmentQueue
+            .AsNoTracking()
             .OrderBy(x => x.ScheduledTime)
             .ToListAsync();
     }

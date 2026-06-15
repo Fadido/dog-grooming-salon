@@ -19,17 +19,13 @@ public class AppointmentsController : ControllerBase
     }
 
     /// <summary>
-    /// List the grooming queue. Optionally filter by date range and/or customer name.
-    /// Each row is flagged with whether it belongs to the caller and what actions are allowed.
+    /// List the full grooming queue. Each row is flagged with whether it belongs to
+    /// the caller and what actions are allowed. (Filtering by name/date is done client-side.)
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<AppointmentQueueDto>>> GetQueue(
-        [FromQuery] DateTime? fromDate,
-        [FromQuery] DateTime? toDate,
-        [FromQuery] string? customerName)
+    public async Task<ActionResult<IReadOnlyList<AppointmentQueueDto>>> GetQueue()
     {
-        var filter = new AppointmentFilter { FromDate = fromDate, ToDate = toDate, CustomerName = customerName };
-        var queue = await _appointments.GetQueueAsync(filter, User.GetUserId());
+        var queue = await _appointments.GetQueueAsync(User.GetUserId());
         return Ok(queue);
     }
 

@@ -1,6 +1,5 @@
 import type {
   AppointmentDetailsDto,
-  AppointmentFilter,
   AppointmentInput,
   AppointmentQueueDto,
   AuthResponse,
@@ -26,21 +25,12 @@ interface RequestOptions {
   method?: string;
   body?: unknown;
   token?: string | null;
-  query?: Record<string, string | undefined>;
 }
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { method = "GET", body, token, query } = options;
+  const { method = "GET", body, token } = options;
 
-  let url = `${BASE_URL}${path}`;
-  if (query) {
-    const params = new URLSearchParams();
-    for (const [k, v] of Object.entries(query)) {
-      if (v != null && v !== "") params.set(k, v);
-    }
-    const qs = params.toString();
-    if (qs) url += `?${qs}`;
-  }
+  const url = `${BASE_URL}${path}`;
 
   const headers: Record<string, string> = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
@@ -107,15 +97,8 @@ export const haircutTypesApi = {
 };
 
 export const appointmentsApi = {
-  list: (token: string, filter: AppointmentFilter = {}) =>
-    request<AppointmentQueueDto[]>("/appointments", {
-      token,
-      query: {
-        fromDate: filter.fromDate,
-        toDate: filter.toDate,
-        customerName: filter.customerName,
-      },
-    }),
+  list: (token: string) =>
+    request<AppointmentQueueDto[]>("/appointments", { token }),
   get: (token: string, id: number) =>
     request<AppointmentDetailsDto>(`/appointments/${id}`, { token }),
   create: (token: string, input: AppointmentInput) =>

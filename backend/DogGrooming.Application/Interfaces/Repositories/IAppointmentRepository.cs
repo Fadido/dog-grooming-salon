@@ -1,4 +1,3 @@
-using DogGrooming.Application.DTOs.Appointments;
 using DogGrooming.Domain.Entities;
 
 namespace DogGrooming.Application.Interfaces.Repositories;
@@ -17,6 +16,6 @@ public interface IAppointmentRepository
 
     Task DeleteAsync(Appointment appointment);
 
-    /// <summary>Reads the queue from the <c>vw_AppointmentQueue</c> view, applying optional filters.</summary>
-    Task<IReadOnlyList<AppointmentQueueItem>> QueryQueueAsync(AppointmentFilter filter);
+    /// <summary>Reads the full queue from the <c>vw_AppointmentQueue</c> view, ordered by arrival time.</summary>
+    Task<IReadOnlyList<AppointmentQueueItem>> QueryQueueAsync();
 }
