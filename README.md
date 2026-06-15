@@ -59,6 +59,13 @@ dotnet run --project DogGrooming.Api --launch-profile http   # listens on http:/
 
 Swagger UI is available in Development at `http://localhost:5135/swagger`.
 
+Run the unit tests (xUnit + Moq — covers the appointment business rules and password hashing):
+
+```bash
+cd backend
+dotnet test
+```
+
 ### 2. Frontend
 
 ```bash
