@@ -14,6 +14,6 @@ public static class ClaimsPrincipalExtensions
         if (int.TryParse(value, out var id))
             return id;
 
-        throw new UnauthorizedAccessException("The token does not contain a valid user id.");
+        throw new UnauthorizedAccessException("האסימון אינו מכיל מזהה משתמש תקין.");
     }
 }

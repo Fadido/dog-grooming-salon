@@ -46,7 +46,7 @@ public class AppointmentService : IAppointmentService
     public async Task<AppointmentDetailsDto> GetByIdAsync(int id, int currentUserId)
     {
         var appointment = await _appointments.GetByIdAsync(id)
-            ?? throw new NotFoundException("Appointment not found.");
+            ?? throw new NotFoundException("התור לא נמצא.");
 
         return MapDetails(appointment, currentUserId);
     }
@@ -54,10 +54,10 @@ public class AppointmentService : IAppointmentService
     public async Task<AppointmentDetailsDto> CreateAsync(CreateAppointmentRequest request, int currentUserId)
     {
         if (request.ScheduledTime <= DateTime.UtcNow)
-            throw new BusinessRuleException("The scheduled time must be in the future.");
+            throw new BusinessRuleException("מועד ההגעה חייב להיות בעתיד.");
 
         var haircutType = await _haircutTypes.GetByIdAsync(request.HaircutTypeId)
-            ?? throw new BusinessRuleException("The selected haircut type does not exist.");
+            ?? throw new BusinessRuleException("סוג התספורת שנבחר אינו קיים.");
 
         // Price and loyalty discount are computed inside the sp_CreateAppointment stored procedure.
         var created = await _appointments.CreateViaProcedureAsync(
@@ -71,17 +71,17 @@ public class AppointmentService : IAppointmentService
     public async Task<AppointmentDetailsDto> UpdateAsync(int id, UpdateAppointmentRequest request, int currentUserId)
     {
         var appointment = await _appointments.GetByIdAsync(id)
-            ?? throw new NotFoundException("Appointment not found.");
+            ?? throw new NotFoundException("התור לא נמצא.");
 
         // A customer may only edit their own records.
         if (appointment.UserId != currentUserId)
-            throw new ForbiddenException("You can only edit your own appointments.");
+            throw new ForbiddenException("ניתן לערוך רק תורים שלך.");
 
         if (request.ScheduledTime <= DateTime.UtcNow)
-            throw new BusinessRuleException("The scheduled time must be in the future.");
+            throw new BusinessRuleException("מועד ההגעה חייב להיות בעתיד.");
 
         var haircutType = await _haircutTypes.GetByIdAsync(request.HaircutTypeId)
-            ?? throw new BusinessRuleException("The selected haircut type does not exist.");
+            ?? throw new BusinessRuleException("סוג התספורת שנבחר אינו קיים.");
 
         appointment.HaircutTypeId = haircutType.Id;
         appointment.ScheduledTime = request.ScheduledTime;
@@ -101,15 +101,15 @@ public class AppointmentService : IAppointmentService
     public async Task DeleteAsync(int id, int currentUserId)
     {
         var appointment = await _appointments.GetByIdAsync(id)
-            ?? throw new NotFoundException("Appointment not found.");
+            ?? throw new NotFoundException("התור לא נמצא.");
 
         // A customer may only delete their own records.
         if (appointment.UserId != currentUserId)
-            throw new ForbiddenException("You can only delete your own appointments.");
+            throw new ForbiddenException("ניתן למחוק רק תורים שלך.");
 
         // A customer cannot delete an appointment scheduled for today.
         if (appointment.ScheduledTime.Date == DateTime.UtcNow.Date)
-            throw new BusinessRuleException("You cannot delete an appointment scheduled for today.");
+            throw new BusinessRuleException("לא ניתן למחוק תור שמתוכנן להיום.");
 
         await _appointments.DeleteAsync(appointment);
     }

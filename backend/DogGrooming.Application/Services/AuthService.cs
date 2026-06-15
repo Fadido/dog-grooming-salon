@@ -25,7 +25,7 @@ public class AuthService : IAuthService
         var username = request.Username.Trim();
 
         if (await _users.UsernameExistsAsync(username))
-            throw new BusinessRuleException("Username is already taken.");
+            throw new BusinessRuleException("שם המשתמש כבר תפוס.");
 
         var user = new User
         {
@@ -46,7 +46,7 @@ public class AuthService : IAuthService
         // Same generic error whether the user is missing or the password is wrong,
         // to avoid leaking which usernames exist.
         if (user is null || !_passwordHasher.Verify(request.Password, user.PasswordHash))
-            throw new BusinessRuleException("Invalid username or password.");
+            throw new BusinessRuleException("שם משתמש או סיסמה שגויים.");
 
         return BuildAuthResponse(user);
     }
@@ -54,7 +54,7 @@ public class AuthService : IAuthService
     public async Task<UserDto> GetCurrentUserAsync(int userId)
     {
         var user = await _users.GetByIdAsync(userId)
-            ?? throw new NotFoundException("User not found.");
+            ?? throw new NotFoundException("המשתמש לא נמצא.");
 
         return new UserDto { Id = user.Id, Username = user.Username, FirstName = user.FirstName };
     }

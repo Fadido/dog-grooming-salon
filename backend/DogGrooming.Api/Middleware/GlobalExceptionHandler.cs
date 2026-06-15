@@ -22,11 +22,11 @@ public class GlobalExceptionHandler : IExceptionHandler
     {
         var (status, title) = exception switch
         {
-            NotFoundException => (StatusCodes.Status404NotFound, "Not found"),
-            ForbiddenException => (StatusCodes.Status403Forbidden, "Forbidden"),
-            BusinessRuleException => (StatusCodes.Status400BadRequest, "Bad request"),
-            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
-            _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred")
+            NotFoundException => (StatusCodes.Status404NotFound, "לא נמצא"),
+            ForbiddenException => (StatusCodes.Status403Forbidden, "הפעולה אינה מורשית"),
+            BusinessRuleException => (StatusCodes.Status400BadRequest, "בקשה לא תקינה"),
+            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "נדרשת התחברות"),
+            _ => (StatusCodes.Status500InternalServerError, "אירעה שגיאה בלתי צפויה. נסו שוב מאוחר יותר.")
         };
 
         if (status == StatusCodes.Status500InternalServerError)
