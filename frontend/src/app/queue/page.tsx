@@ -80,7 +80,8 @@ export default function QueuePage() {
   }, [token, handleAuthError]);
 
   const myCount = appointments.filter((a) => a.isMine).length;
-  const hasLoyalty = myCount > LOYALTY_THRESHOLD;
+  // 4th booking onward: a customer with >= 3 existing appointments gets the discount.
+  const hasLoyalty = myCount >= LOYALTY_THRESHOLD;
 
   // ---- Booking ----
   function openAdd() {

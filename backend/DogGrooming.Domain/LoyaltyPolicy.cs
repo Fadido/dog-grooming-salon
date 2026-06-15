@@ -1,8 +1,8 @@
 namespace DogGrooming.Domain;
 
 /// <summary>
-/// Loyalty rule: a customer who has booked more than <see cref="PastAppointmentThreshold"/>
-/// appointments in the past receives a discount on every future grooming.
+/// Loyalty rule: once a customer has at least <see cref="PastAppointmentThreshold"/>
+/// existing appointments, their next booking (the 4th onward) receives the discount.
 /// </summary>
 /// <remarks>
 /// These values are the single source of truth for the rule. The <c>sp_CreateAppointment</c>
@@ -10,6 +10,7 @@ namespace DogGrooming.Domain;
 /// </remarks>
 public static class LoyaltyPolicy
 {
+    /// <summary>Minimum count of existing appointments that makes the next booking discounted.</summary>
     public const int PastAppointmentThreshold = 3;
     public const decimal DiscountRate = 0.10m;
 

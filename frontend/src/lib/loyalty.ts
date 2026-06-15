@@ -2,7 +2,10 @@
 // source of truth for the actual price; these values are only used for the
 // live preview shown before saving.
 
-/** A customer with more than this many appointments earns the discount. */
+/**
+ * Once a customer has at least this many existing appointments, their next
+ * booking (the 4th onward) gets the loyalty discount.
+ */
 export const LOYALTY_THRESHOLD = 3;
 
 /** 10% loyalty discount. */
