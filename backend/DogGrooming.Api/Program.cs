@@ -26,6 +26,9 @@ if (string.IsNullOrWhiteSpace(jwt.Key))
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        // Keep the principal's claims identical to what we issued (no sub -> nameid rewrite).
+        options.MapInboundClaims = false;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,

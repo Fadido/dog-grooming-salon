@@ -21,10 +21,12 @@ public class JwtTokenService : IJwtTokenService
     {
         var expiresAt = DateTime.UtcNow.AddMinutes(_options.ExpiryMinutes);
 
+        // "sub" is the standard JWT claim for the subject (the user id). We intentionally
+        // emit it once; inbound claim mapping is disabled in Program.cs so it is not
+        // rewritten to ClaimTypes.NameIdentifier behind our back.
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
             new Claim("firstName", user.FirstName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
