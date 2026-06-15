@@ -94,11 +94,19 @@ export function AppointmentRow({
           <IconButton label="עריכה" tone="primary" variant="soft" size="sm" onClick={onEdit}>{editIcon}</IconButton>
         ) : null}
         {canEdit ? (
-          <IconButton
-            label={deleteHint || "מחיקה"} title={deleteHint || "מחיקה"}
-            tone="danger" variant="soft" size="sm"
-            disabled={!canDelete} onClick={canDelete ? onDelete : undefined}
-          >{deleteIcon}</IconButton>
+          // The tooltip lives on the wrapper span: browsers don't show a
+          // disabled button's own `title`, so when delete is blocked
+          // (e.g. same-day) the hint would otherwise be invisible.
+          <span
+            title={deleteHint || "מחיקה"}
+            style={{ display: "inline-flex", cursor: canDelete ? "default" : "not-allowed" }}
+          >
+            <IconButton
+              label={deleteHint || "מחיקה"}
+              tone="danger" variant="soft" size="sm"
+              disabled={!canDelete} onClick={canDelete ? onDelete : undefined}
+            >{deleteIcon}</IconButton>
+          </span>
         ) : null}
       </div>
     </div>

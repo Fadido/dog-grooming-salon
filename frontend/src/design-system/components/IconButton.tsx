@@ -69,6 +69,8 @@ export function IconButton({
         color: fg,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.4 : 1,
+        // Let hover pass through to a wrapper (so its tooltip can show) when disabled.
+        pointerEvents: disabled ? "none" : undefined,
         transition: "background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)",
         ...style,
       }}
