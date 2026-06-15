@@ -87,7 +87,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Skip HTTPS redirection in Development: it would 307-redirect the browser's
+// http API calls (and CORS preflights) to the untrusted dev HTTPS cert, which
+// the browser blocks. Production still enforces HTTPS.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseCors(FrontendCorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
