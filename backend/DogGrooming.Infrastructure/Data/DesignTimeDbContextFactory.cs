@@ -9,18 +9,10 @@ namespace DogGrooming.Infrastructure.Data;
 /// </summary>
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
-    // LocalDB fallback so migrations run out-of-the-box; override with the standard
-    // ConnectionStrings__Default environment variable to target another server.
-    private const string DefaultConnectionString =
-        "Server=(localdb)\\MSSQLLocalDB;Database=DogGroomingDb;Trusted_Connection=True;TrustServerCertificate=True";
-
     public AppDbContext CreateDbContext(string[] args)
     {
-        var connectionString =
-            Environment.GetEnvironmentVariable("ConnectionStrings__Default") ?? DefaultConnectionString;
-
         var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlServer(connectionString)
+            .UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DogGroomingDb;Trusted_Connection=True;TrustServerCertificate=True")
             .Options;
 
         return new AppDbContext(options);
