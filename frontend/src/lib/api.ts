@@ -63,11 +63,23 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   const data = text ? safeJson(text) : null;
 
   if (!res.ok) {
-    const problem = data as { detail?: string; title?: string } | null;
+    const problem = data as
+      | { detail?: string; title?: string; errors?: Record<string, string[]> }
+      | null;
+
+    // Model-validation responses (400) put the real reasons in `errors`;
+    // surface those instead of the generic title.
+    const fieldErrors = problem?.errors
+      ? Object.values(problem.errors).flat().filter(Boolean)
+      : [];
+
     const message =
-      problem?.detail ||
-      problem?.title ||
-      (res.status === 401 ? "נדרשת התחברות מחדש." : "אירעה שגיאה. נסו שוב.");
+      fieldErrors.length > 0
+        ? fieldErrors.join(" · ")
+        : problem?.detail ||
+          problem?.title ||
+          (res.status === 401 ? "נדרשת התחברות מחדש." : "אירעה שגיאה. נסו שוב.");
+
     throw new ApiError(res.status, message);
   }
 

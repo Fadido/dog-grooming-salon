@@ -4,9 +4,9 @@ namespace DogGrooming.Application.DTOs.Auth;
 
 public class LoginRequest
 {
-    [Required]
+    [Required(ErrorMessage = "יש להזין שם משתמש")]
     public string Username { get; set; } = string.Empty;
 
-    [Required]
+    [Required(ErrorMessage = "יש להזין סיסמה")]
     public string Password { get; set; } = string.Empty;
 }
