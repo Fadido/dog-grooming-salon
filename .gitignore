@@ -12,6 +12,9 @@ artifacts/
 *.mdf
 *.ldf
 
+# Logs (incl. transient run logs)
+*.log
+
 # Secrets (never commit real secrets)
 appsettings.*.local.json
 secrets.json
