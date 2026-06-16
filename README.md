@@ -46,6 +46,18 @@ frontend/
 - **Stored procedure** `sp_CreateAppointment` — atomically computes the loyalty discount
   and inserts an appointment.
 
+## Prerequisites
+
+- **.NET SDK 10** — `dotnet --version`
+- **Node.js 18+** (developed on 24) — `node --version`
+- **SQL Server LocalDB** (`(localdb)\MSSQLLocalDB`) — ships with Visual Studio or the standalone
+  "SQL Server Express LocalDB" installer. *Windows only*; on macOS/Linux point the connection
+  string in `backend/DogGrooming.Api/appsettings.json` at a real SQL Server (e.g. via Docker).
+- **EF Core CLI** (for migrations):
+  ```bash
+  dotnet tool install --global dotnet-ef --version 10.0.9
+  ```
+
 ## Getting started
 
 ### 1. Backend
@@ -53,6 +65,7 @@ frontend/
 ```bash
 cd backend
 dotnet build
+# Creates the DogGroomingDb database with tables, seed data, the SQL view and the stored procedure:
 dotnet ef database update --project DogGrooming.Infrastructure --startup-project DogGrooming.Api
 dotnet run --project DogGrooming.Api --launch-profile http   # listens on http://localhost:5135
 ```
